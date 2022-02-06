@@ -1,5 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+
 const { User } = require('../models');
 
 const { JWT_SECRET } = process.env;
@@ -49,6 +50,7 @@ const validatePassword = (req, res, next) => {
   next();
 };
 
+<<<<<<< HEAD
 const validateUser = async (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization) {
