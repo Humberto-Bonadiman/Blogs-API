@@ -1753,9 +1753,6 @@
   dependencies:
     "webidl-conversions" "^5.0.0"
 
-<<<<<<< HEAD
-"dotenv@^8.2.0":
-=======
 "dot-prop@^5.2.0":
   "integrity" "sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q=="
   "resolved" "https://registry.npmjs.org/dot-prop/-/dot-prop-5.3.0.tgz"
@@ -1763,8 +1760,7 @@
   dependencies:
     "is-obj" "^2.0.0"
 
-"dotenv@8.2.0":
->>>>>>> 8e187dee312f4a29c51506c695d0b466f897dcae
+"dotenv@^8.2.0":
   "integrity" "sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw=="
   "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-8.2.0.tgz"
   "version" "8.2.0"
