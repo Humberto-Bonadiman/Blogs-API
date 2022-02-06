@@ -3,8 +3,6 @@ const jwt = require('jsonwebtoken');
 
 const { Users } = require('../models');
 
-const { JWT_SECRET } = process.env;
-
 const isEmailValid = (email) => {
   const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
   return regexEmail.test(email);
@@ -32,7 +30,7 @@ const validateEmail = async (req, res, next) => {
   }
 
   const lookEmail = await Users.findOne({ where: { email } });
-  // console.log(lookEmail);
+
   if (lookEmail) {
     return res.status(409).json({ message: 'User already registered' });
   }
@@ -58,7 +56,7 @@ const validateUser = async (req, res, next) => {
   if (!authorization) {
     return res.status(401).json({ error: 'Token não encontrado' });
   }
-  const decoded = jwt.verify(authorization, JWT_SECRET);
+  const decoded = jwt.verify(authorization, process.env.JWT_SECRET);
   const user = await Users.findOne({ where: { email: decoded.data.email } });
 
   if (user) {

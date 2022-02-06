@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
       algorithm: 'HS256',
     };
 
-    const token = jwt.sign({ username: user.dataValues.email }, JWT_SECRET, jwtConfig);
+    const token = jwt.sign({ username: user.dataValues.email }, process.env.JWT_SECRET, jwtConfig);
 
     return res.status(201).json({ token });
   } catch (err) {
