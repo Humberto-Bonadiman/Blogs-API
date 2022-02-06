@@ -7,13 +7,13 @@ module.exports = async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
     const user = await Users.create({ displayName, email, password, image });
-    // console.log(user);
+    if (!user) throw Error;
     const jwtConfig = {
       expiresIn: '7d',
       algorithm: 'HS256',
     };
 
-    const token = jwt.sign({ username: user.dataValues.email }, process.env.JWT_SECRET, jwtConfig);
+    const token = jwt.sign({ data: user }, process.env.JWT_SECRET, jwtConfig);
 
     return res.status(201).json({ token });
   } catch (err) {
