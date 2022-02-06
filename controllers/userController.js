@@ -3,8 +3,6 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { Users } = require('../models');
 
-const { JWT_SECRET } = process.env;
-
 module.exports = async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
