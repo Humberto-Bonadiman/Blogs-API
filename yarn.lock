@@ -1629,7 +1629,7 @@
   dependencies:
     "webidl-conversions" "^5.0.0"
 
-"dotenv@8.2.0":
+"dotenv@^8.2.0":
   "integrity" "sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw=="
   "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-8.2.0.tgz"
   "version" "8.2.0"
@@ -4080,7 +4080,7 @@
   "resolved" "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.8.tgz"
   "version" "0.0.8"
 
-"mysql2@2.1.0":
+"mysql2@^2.1.0":
   "integrity" "sha512-9kGVyi930rG2KaHrz3sHwtc6K+GY9d8wWk1XRSYxQiunvGcn4DwuZxOwmK11ftuhhwrYDwGx9Ta4VBwznJn36A=="
   "resolved" "https://registry.npmjs.org/mysql2/-/mysql2-2.1.0.tgz"
   "version" "2.1.0"
@@ -4995,7 +4995,7 @@
   "resolved" "https://registry.npmjs.org/seq-queue/-/seq-queue-0.0.5.tgz"
   "version" "0.0.5"
 
-"sequelize-cli@6.2.0":
+"sequelize-cli@^6.2.0":
   "integrity" "sha512-6WQ2x91hg30dUn66mXHnzvHATZ4pyI1GHSNbS/TNN/vRR4BLRSLijadeMgC8zqmKDsL0VqzVVopJWfJakuP++Q=="
   "resolved" "https://registry.npmjs.org/sequelize-cli/-/sequelize-cli-6.2.0.tgz"
   "version" "6.2.0"
@@ -5013,7 +5013,7 @@
   "resolved" "https://registry.npmjs.org/sequelize-pool/-/sequelize-pool-6.1.0.tgz"
   "version" "6.1.0"
 
-"sequelize@6.3.4":
+"sequelize@^6.3.4":
   "integrity" "sha512-W6Y96N5QHTgEz5Q37v2GYbKufSXaw0b3v4rCLTPbcCMfIG0MHI42Ozp7IwiyV9bdNkfFEdY7XP8R6lWrWg4hUw=="
   "resolved" "https://registry.npmjs.org/sequelize/-/sequelize-6.3.4.tgz"
   "version" "6.3.4"
