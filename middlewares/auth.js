@@ -18,17 +18,28 @@ const validateDisplay = (req, res, next) => {
   next();
 };
 
-const validateEmail = async (req, res, next) => {
+const emailExist = (req, res, next) => {
   const { email } = req.body;
 
-  if (!email) {
+  if (email === undefined) {
     return res.status(400).json({ message: '"email" is required' });
   }
+
+  next();
+};
+
+const validateEmail = (req, res, next) => {
+  const { email } = req.body;
 
   if (isEmailValid(email) === false) {
     return res.status(400).json({ message: '"email" must be a valid email' });
   }
 
+  next();
+};
+
+const userEmail = async (req, res, next) => {
+  const { email } = req.body;
   const lookEmail = await Users.findOne({ where: { email } });
 
   if (lookEmail) {
@@ -38,11 +49,47 @@ const validateEmail = async (req, res, next) => {
   next();
 };
 
-const validatePassword = (req, res, next) => {
+const emailNotEmpty = (req, res, next) => {
+  const { email } = req.body;
+  if (email === '') {
+    return res.status(400).json({ message: '"email" is not allowed to be empty' });
+  }
+
+  next();
+};
+
+const notUserEmail = async (req, res, next) => {
+  const { email } = req.body;
+  const lookEmail = await Users.findOne({ where: { email } });
+
+  if (!lookEmail) {
+    return res.status(400).json({ message: 'Invalid fields' });
+  }
+
+  next();
+};
+
+const passwordExist = (req, res, next) => {
   const { password } = req.body;
-  if (!password) {
+  if (password === undefined) {
     return res.status(400).json({ message: '"password" is required' });
   }
+
+  next();
+};
+
+const passwordNotEmpty = (req, res, next) => {
+  const { password } = req.body;
+
+  if (password === '') {
+    return res.status(400).json({ message: '"password" is not allowed to be empty' });
+  }
+
+  next();
+};
+
+const validatePassword = (req, res, next) => {
+  const { password } = req.body;
 
   if (password.length !== 6) {
     return res.status(400).json({ message: '"password" length must be 6 characters long' });
@@ -69,7 +116,13 @@ const validateUser = async (req, res, next) => {
 
 module.exports = {
   validateDisplay,
+  emailExist,
   validateEmail,
+  userEmail,
+  emailNotEmpty,
+  notUserEmail,
+  passwordExist,
+  passwordNotEmpty,
   validatePassword,
   validateUser,
 };
