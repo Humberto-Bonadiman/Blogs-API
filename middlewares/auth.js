@@ -1,7 +1,7 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
-const { User } = require('../models');
+const { Users } = require('../models');
 
 const { JWT_SECRET } = process.env;
 
@@ -22,16 +22,19 @@ const validateDisplay = (req, res, next) => {
 
 const validateEmail = async (req, res, next) => {
   const { email } = req.body;
-  const lookEmail = await User.findOne({ where: { email } });
-  if (lookEmail) {
-    return res.status(409).json({ message: 'User already registered' });
-  }
+
   if (!email) {
     return res.status(400).json({ message: '"email" is required' });
   }
 
   if (isEmailValid(email) === false) {
     return res.status(400).json({ message: '"email" must be a valid email' });
+  }
+
+  const lookEmail = await Users.findOne({ where: { email } });
+  // console.log(lookEmail);
+  if (lookEmail) {
+    return res.status(409).json({ message: 'User already registered' });
   }
 
   next();
@@ -56,7 +59,7 @@ const validateUser = async (req, res, next) => {
     return res.status(401).json({ error: 'Token não encontrado' });
   }
   const decoded = jwt.verify(authorization, JWT_SECRET);
-  const user = await User.findOne({ where: { email: decoded.data.email } });
+  const user = await Users.findOne({ where: { email: decoded.data.email } });
 
   if (user) {
     return res.status(409).json({ message: 'User already registered' });
