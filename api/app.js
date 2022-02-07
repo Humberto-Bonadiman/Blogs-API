@@ -13,7 +13,8 @@ const {
   validatePassword,
   passwordExist,
   passwordNotEmpty,
-  // validateUser,
+  validateToken,
+  validateUser,
 } = require('../middlewares/auth');
 
 const app = express();
@@ -31,7 +32,7 @@ apiRoutes.post(
   passwordExist,
   validatePassword,
   userEmail,
-  routes.userController,
+  routes.createUser,
 );
 
 apiRoutes.post(
@@ -43,6 +44,8 @@ apiRoutes.post(
   notUserEmail,
   routes.loginController,
 );
+
+apiRoutes.get('/user', validateToken, validateUser, routes.getAllUser);
 
 app.use(apiRoutes);
 

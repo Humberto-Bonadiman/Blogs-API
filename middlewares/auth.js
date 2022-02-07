@@ -98,20 +98,30 @@ const validatePassword = (req, res, next) => {
   next();
 };
 
-const validateUser = async (req, res, next) => {
+const validateToken = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization) {
     return res.status(401).json({ error: 'Token não encontrado' });
   }
-  const decoded = jwt.verify(authorization, process.env.JWT_SECRET);
-  const user = await Users.findOne({ where: { email: decoded.data.email } });
-
-  if (user) {
-    return res.status(409).json({ message: 'User already registered' });
-  }
-  req.user = user;
 
   next();
+};
+
+const validateUser = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+  
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await Users.findByPk(decoded.data.id);
+
+    if (!user) {
+      return res.status(401).json({ message: 'Expired or invalid token' });
+    }
+
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: 'Expired or invalid token' });
+  }
 };
 
 module.exports = {
@@ -125,4 +135,5 @@ module.exports = {
   passwordNotEmpty,
   validatePassword,
   validateUser,
+  validateToken,
 };

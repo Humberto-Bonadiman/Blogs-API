@@ -3,7 +3,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { Users } = require('../models');
 
-module.exports = async (req, res) => {
+const createUser = async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
     const user = await Users.create({ displayName, email, password, image });
@@ -19,4 +19,19 @@ module.exports = async (req, res) => {
   } catch (err) {
     return res.status(500).json({ message: 'Erro interno', error: err.message });
   }
+};
+
+const getAllUser = async (_req, res) => {
+  try {
+    const user = await Users.findAll({ attributes: { exclude: 'password' } });
+    console.log(user);
+    return res.status(200).json(user);
+  } catch (err) {
+    return res.status(500).json({ message: 'Erro interno', error: err.message });
+  }
+};
+
+module.exports = {
+  createUser,
+  getAllUser,
 };
