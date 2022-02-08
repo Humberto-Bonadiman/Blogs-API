@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./routes.js');
 const auth = require('../middlewares/auth');
+const authCategories = require('../middlewares/authCategories');
 
 const app = express();
 
@@ -46,6 +47,14 @@ apiRoutes.get(
   auth.validateUser,
   auth.userNotExist,
   routes.getUserById,
+);
+
+apiRoutes.post(
+  '/categories',
+  authCategories.validateName,
+  auth.validateToken,
+  auth.validateUser,
+  routes.createCategory,
 );
 
 app.use(apiRoutes);
