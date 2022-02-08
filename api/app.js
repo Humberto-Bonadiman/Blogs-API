@@ -57,6 +57,13 @@ apiRoutes.post(
   routes.createCategory,
 );
 
+apiRoutes.get(
+  '/categories',
+  auth.validateToken,
+  auth.validateUser,
+  routes.getAllCategories,
+);
+
 app.use(apiRoutes);
 
 module.exports = app;
