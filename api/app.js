@@ -3,19 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./routes.js');
-const { 
-  validateDisplay,
-  emailExist,
-  validateEmail,
-  userEmail,
-  emailNotEmpty,
-  notUserEmail,
-  validatePassword,
-  passwordExist,
-  passwordNotEmpty,
-  validateToken,
-  validateUser,
-} = require('../middlewares/auth');
+const auth = require('../middlewares/auth');
 
 const app = express();
 
@@ -26,26 +14,31 @@ const apiRoutes = express.Router();
 
 apiRoutes.post(
   '/user',
-  validateDisplay,
-  emailExist,
-  validateEmail,
-  passwordExist,
-  validatePassword,
-  userEmail,
+  auth.validateDisplay,
+  auth.emailExist,
+  auth.validateEmail,
+  auth.passwordExist,
+  auth.validatePassword,
+  auth.userEmail,
   routes.createUser,
 );
 
 apiRoutes.post(
   '/login',
-  emailExist,
-  passwordExist,
-  emailNotEmpty,
-  passwordNotEmpty,
-  notUserEmail,
+  auth.emailExist,
+  auth.passwordExist,
+  auth.emailNotEmpty,
+  auth.passwordNotEmpty,
+  auth.notUserEmail,
   routes.loginController,
 );
 
-apiRoutes.get('/user', validateToken, validateUser, routes.getAllUser);
+apiRoutes.get(
+  '/user',
+  auth.validateToken,
+  auth.validateUser,
+  routes.getAllUser,
+);
 
 app.use(apiRoutes);
 

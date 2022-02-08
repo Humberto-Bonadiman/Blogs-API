@@ -101,7 +101,7 @@ const validatePassword = (req, res, next) => {
 const validateToken = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization) {
-    return res.status(401).json({ error: 'Token não encontrado' });
+    return res.status(401).json({ message: 'Token not found' });
   }
 
   next();
