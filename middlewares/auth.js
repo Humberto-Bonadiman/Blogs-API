@@ -124,6 +124,16 @@ const validateUser = async (req, res, next) => {
   }
 };
 
+const userNotExist = async (req, res, next) => {
+  const { id } = req.params;
+  const userId = await Users.findOne({ where: { id } });
+  if (!userId) {
+    return res.status(404).json({ message: 'User does not exist' });
+  }
+
+  next();
+};
+
 module.exports = {
   validateDisplay,
   emailExist,
@@ -136,4 +146,5 @@ module.exports = {
   validatePassword,
   validateUser,
   validateToken,
+  userNotExist,
 };

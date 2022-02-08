@@ -40,6 +40,14 @@ apiRoutes.get(
   routes.getAllUser,
 );
 
+apiRoutes.get(
+  '/user/:id',
+  auth.validateToken,
+  auth.validateUser,
+  auth.userNotExist,
+  routes.getUserById,
+);
+
 app.use(apiRoutes);
 
 module.exports = app;

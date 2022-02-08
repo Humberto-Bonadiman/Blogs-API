@@ -24,8 +24,17 @@ const createUser = async (req, res) => {
 const getAllUser = async (_req, res) => {
   try {
     const user = await Users.findAll({ attributes: { exclude: 'password' } });
-    console.log(user);
     return res.status(200).json(user);
+  } catch (err) {
+    return res.status(500).json({ message: 'Erro interno', error: err.message });
+  }
+};
+
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = await Users.findOne({ where: { id }, attributes: { exclude: 'password' } });
+    return res.status(200).json(userId);
   } catch (err) {
     return res.status(500).json({ message: 'Erro interno', error: err.message });
   }
@@ -34,4 +43,5 @@ const getAllUser = async (_req, res) => {
 module.exports = {
   createUser,
   getAllUser,
+  getUserById,
 };
