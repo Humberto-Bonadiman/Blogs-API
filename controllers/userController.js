@@ -23,7 +23,6 @@ const createUser = async (req, res) => {
     };
 
     const token = jwt.sign({ data: secureUser(user) }, process.env.JWT_SECRET, jwtConfig);
-    console.log(token);
     return res.status(201).json({ token });
   } catch (err) {
     return res.status(500).json({ message: 'Erro interno', error: err.message });

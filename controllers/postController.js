@@ -18,7 +18,9 @@ const createPost = async (req, res) => {
     const token = req.headers.authorization;
   
     const { data: { id } } = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(id);
     const post = await BlogPosts.create({ title, content, userId: id, categoryIds });
+    console.log(post);
 
     return res.status(201).json(postObject(post));
   } catch (err) {

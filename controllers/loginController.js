@@ -5,8 +5,10 @@ const { Users } = require('../models');
 
 module.exports = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await Users.create({ email, password });
+    const { email } = req.body;
+    
+    const user = await Users.findOne({ where: { email } });
+
     const jwtConfig = {
       expiresIn: '7d',
       algorithm: 'HS256',
