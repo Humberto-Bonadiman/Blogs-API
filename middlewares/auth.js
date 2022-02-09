@@ -38,21 +38,21 @@ const validateEmail = (req, res, next) => {
   next();
 };
 
+const emailNotEmpty = (req, res, next) => {
+  const { email } = req.body;
+  if (email === '') {
+    return res.status(400).json({ message: '"email" is not allowed to be empty' });
+  }
+
+  next();
+};
+
 const userEmail = async (req, res, next) => {
   const { email } = req.body;
   const lookEmail = await Users.findOne({ where: { email } });
 
   if (lookEmail) {
     return res.status(409).json({ message: 'User already registered' });
-  }
-
-  next();
-};
-
-const emailNotEmpty = (req, res, next) => {
-  const { email } = req.body;
-  if (email === '') {
-    return res.status(400).json({ message: '"email" is not allowed to be empty' });
   }
 
   next();
@@ -112,6 +112,7 @@ const validateUser = async (req, res, next) => {
     const token = req.headers.authorization;
   
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
     const user = await Users.findByPk(decoded.data.id);
 
     if (!user) {

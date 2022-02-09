@@ -3,6 +3,15 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { Users } = require('../models');
 
+function secureUser(object) {
+  return {
+    id: object.id,
+    displayName: object.displayName,
+    email: object.email,
+    image: object.image,
+  };
+}
+
 const createUser = async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
@@ -13,8 +22,8 @@ const createUser = async (req, res) => {
       algorithm: 'HS256',
     };
 
-    const token = jwt.sign({ data: user }, process.env.JWT_SECRET, jwtConfig);
-
+    const token = jwt.sign({ data: secureUser(user) }, process.env.JWT_SECRET, jwtConfig);
+    console.log(token);
     return res.status(201).json({ token });
   } catch (err) {
     return res.status(500).json({ message: 'Erro interno', error: err.message });
