@@ -76,6 +76,13 @@ apiRoutes.post(
   routes.createPost,
 );
 
+apiRoutes.get(
+  '/post',
+  auth.validateToken,
+  auth.validateUser,
+  routes.getAllUser,
+);
+
 app.use(apiRoutes);
 
 module.exports = app;
