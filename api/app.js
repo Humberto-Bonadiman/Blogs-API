@@ -80,7 +80,7 @@ apiRoutes.get(
   '/post',
   auth.validateToken,
   auth.validateUser,
-  routes.getAllUser,
+  routes.getAllPosts,
 );
 
 app.use(apiRoutes);
