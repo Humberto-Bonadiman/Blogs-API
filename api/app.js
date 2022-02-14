@@ -102,6 +102,15 @@ apiRoutes.put(
   routes.updatePostById,
 );
 
+apiRoutes.delete(
+  '/post/:id',
+  auth.validateToken,
+  auth.validateUser,
+  authPost.postNotExist,
+  authPost.sameUser,
+  routes.deletePostById,
+);
+
 app.use(apiRoutes);
 
 module.exports = app;
