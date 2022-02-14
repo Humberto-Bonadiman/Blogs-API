@@ -111,6 +111,13 @@ apiRoutes.delete(
   routes.deletePostById,
 );
 
+apiRoutes.delete(
+  '/user/me',
+  auth.validateToken,
+  auth.validateUser,
+  routes.deleteMeUser,
+);
+
 app.use(apiRoutes);
 
 module.exports = app;

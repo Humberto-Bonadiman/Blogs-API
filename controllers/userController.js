@@ -48,8 +48,21 @@ const getUserById = async (req, res) => {
   }
 };
 
+const deleteMeUser = async (req, res) => {
+  try {
+    const token = req.headers.authorization;
+    const { data: { id } } = jwt.verify(token, process.env.JWT_SECRET);
+    await Users.destroy({ where: { id } });
+
+    return res.status(204).end();
+  } catch (err) {
+    return res.status(500).json({ message: 'Erro interno', error: err.message });
+  }
+};
+
 module.exports = {
   createUser,
   getAllUser,
   getUserById,
+  deleteMeUser,
 };

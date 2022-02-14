@@ -9,6 +9,7 @@ const { getAllPosts } = require('../controllers/postController');
 const { getPostById } = require('../controllers/postController');
 const { updatePostById } = require('../controllers/postController');
 const { deletePostById } = require('../controllers/postController');
+const { deleteMeUser } = require('../controllers/userController');
 
 module.exports = {
   createUser,
@@ -22,4 +23,5 @@ module.exports = {
   getPostById,
   updatePostById,
   deletePostById,
+  deleteMeUser,
 };
