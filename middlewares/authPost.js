@@ -1,4 +1,4 @@
-const { Categories } = require('../models');
+const { Categories, BlogPosts } = require('../models');
 
 const validateTitle = (req, res, next) => {
   const { title } = req.body;
@@ -36,9 +36,20 @@ const categoryIdExist = async (req, res, next) => {
   next();
 };
 
+const postNotExist = async (req, res, next) => {
+  const { id } = req.params;
+  const postId = await BlogPosts.findOne({ where: { id } });
+  if (!postId) {
+    return res.status(404).json({ message: 'Post does not exist' });
+  }
+
+  next();
+};
+
 module.exports = {
   validateTitle,
   validateContent,
   validateCategoryIds,
   categoryIdExist,
+  postNotExist,
 };

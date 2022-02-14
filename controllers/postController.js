@@ -47,7 +47,25 @@ const getAllPosts = async (_req, res) => {
   }
 };
 
+const getPostById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getById = await BlogPosts.findOne({
+      where: { id },
+      include: [
+        { model: Users, as: 'user', attributes: { exclude: 'password' } },
+        { model: Categories, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+
+    return res.status(200).json(getById);
+  } catch (err) {
+    return res.status(500).json({ message: 'Erro interno', error: err.message });
+  }
+};
+
 module.exports = {
   createPost,
   getAllPosts,
+  getPostById,
 };

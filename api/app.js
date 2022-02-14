@@ -83,6 +83,14 @@ apiRoutes.get(
   routes.getAllPosts,
 );
 
+apiRoutes.get(
+  '/post/:id',
+  auth.validateToken,
+  auth.validateUser,
+  authPost.postNotExist,
+  routes.getPostById,
+);
+
 app.use(apiRoutes);
 
 module.exports = app;
