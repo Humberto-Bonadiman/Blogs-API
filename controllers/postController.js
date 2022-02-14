@@ -64,8 +64,28 @@ const getPostById = async (req, res) => {
   }
 };
 
+const updatePostById = async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  await BlogPosts.update(
+    { title, content },
+    { where: { id } },
+  );
+
+  const getById = await BlogPosts.findOne({
+    where: { id },
+    include: [
+      { model: Categories, as: 'categories', through: { attributes: [] } },
+    ],
+    attributes: { exclude: ['id', 'published', 'updated'] },
+  });
+
+  return res.status(200).json(getById);
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
+  updatePostById,
 };

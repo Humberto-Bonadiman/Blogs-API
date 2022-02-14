@@ -91,6 +91,17 @@ apiRoutes.get(
   routes.getPostById,
 );
 
+apiRoutes.put(
+  '/post/:id',
+  authPost.categoryIdCannotChange,
+  auth.validateToken,
+  auth.validateUser,
+  authPost.validateTitle,
+  authPost.validateContent,
+  authPost.sameUser,
+  routes.updatePostById,
+);
+
 app.use(apiRoutes);
 
 module.exports = app;

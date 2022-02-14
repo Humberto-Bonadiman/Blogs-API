@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const { Categories, BlogPosts } = require('../models');
 
 const validateTitle = (req, res, next) => {
@@ -46,10 +48,32 @@ const postNotExist = async (req, res, next) => {
   next();
 };
 
+const categoryIdCannotChange = async (req, res, next) => {
+  const { categoryIds } = req.body;
+  if (categoryIds) {
+    return res.status(400).json({ message: 'Categories cannot be edited' });
+  }
+  
+  next();
+};
+
+const sameUser = async (req, res, next) => {
+  const token = req.headers.authorization;
+  const { data: { id } } = jwt.verify(token, process.env.JWT_SECRET);
+  const postUserId = await BlogPosts.findOne({ where: { userId: id } });
+  if (!postUserId) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+
+  next();
+};
+
 module.exports = {
   validateTitle,
   validateContent,
   validateCategoryIds,
   categoryIdExist,
   postNotExist,
+  categoryIdCannotChange,
+  sameUser,
 };
