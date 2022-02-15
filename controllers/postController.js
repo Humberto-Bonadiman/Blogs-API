@@ -1,5 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const { Op } = require('sequelize');
 
 const { BlogPosts, Users, Categories, PostsCategories } = require('../models');
 
@@ -90,10 +91,33 @@ const deletePostById = async (req, res) => {
   return res.status(204).end();
 };
 
+/* Fonte: Documentação Sequelize
+  URL: https://sequelize.org/master/manual/model-querying-basics.html */
+
+const getPostBySearch = async (req, res) => {
+  const { q } = req.query;
+
+  const getPostByQuery = await BlogPosts.findAll({
+    where: {
+      [Op.or]: [
+        { title: { [Op.like]: `%${q}%` } },
+        { content: { [Op.like]: `%${q}%` } },
+      ],
+    },
+    include: [
+      { model: Users, as: 'user', attributes: { exclude: 'password' } },
+      { model: Categories, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+
+  return res.status(200).json(getPostByQuery);
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
   updatePostById,
   deletePostById,
+  getPostBySearch,
 };

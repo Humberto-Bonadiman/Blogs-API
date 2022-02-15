@@ -10,6 +10,7 @@ const { getPostById } = require('../controllers/postController');
 const { updatePostById } = require('../controllers/postController');
 const { deletePostById } = require('../controllers/postController');
 const { deleteMeUser } = require('../controllers/userController');
+const { getPostBySearch } = require('../controllers/postController');
 
 module.exports = {
   createUser,
@@ -24,4 +25,5 @@ module.exports = {
   updatePostById,
   deletePostById,
   deleteMeUser,
+  getPostBySearch,
 };

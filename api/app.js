@@ -84,6 +84,13 @@ apiRoutes.get(
 );
 
 apiRoutes.get(
+  '/post/search',
+  auth.validateToken,
+  auth.validateUser,
+  routes.getPostBySearch,
+);
+
+apiRoutes.get(
   '/post/:id',
   auth.validateToken,
   auth.validateUser,
