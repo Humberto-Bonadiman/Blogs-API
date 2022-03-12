@@ -1,9 +1,5 @@
 # Boas vindas ao repositório do API de Blogs!
 
-Você já usa o GitHub diariamente para desenvolver os exercícios, certo? Agora, para desenvolver os projetos, você deverá seguir as instruções a seguir. Fique atento a cada passo, e se tiver qualquer dúvida, nos envie por Slack! #vqv 🚀
-
-Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu projeto a partir deste repositório, utilizando uma branch específica e um Pull Request para colocar seus códigos.
-
 ---
 
 # Habilidades 
@@ -15,11 +11,36 @@ Nesse projeto, eu construi um back-end usando `ORM` com o pacote `sequelize` do 
 
 ---
 
+## Instalação do projeto localmente
+
+Após cada um dos passos, haverá um exemplo do comando a ser digitado para fazer o que está sendo pedido, caso tenha dificuldades, mande mensagem para o meu e-mail _humberto_bonadiman@hotmail.com_.
+
+1. Abra o terminal e crie um diretório no local de sua preferência com o comando **mkdir**:
+```javascript
+  mkdir projetos-humberto
+```
+
+2. Entre no diretório que acabou de criar e depois clone o projeto:
+```javascript
+  cd projetos-humberto
+  git git@github.com:Humberto-Bonadiman/Blogs-API.git
+```
+
+3. Acesse o diretório do projeto e depois utilize o comando **npm i** (opcional) para instalar todas as dependências necessárias:
+```javascript
+  cd Blogs-API
+  npm i
+```
+
+4. Abra o diretório do projeto clonado, depois você pode entrar nos diretórios api, controllers, middlewares, migrations e models e dar duplo clique no arquivos para visualizar os códigos do projeto.
+
+---
+
 # Requisitos do projeto:
 
 **Faça essas configurações também para as variáveis de ambiente usadas nesses arquivo:**
 
-`sd-014-b-project-blogs-api/config/config.js`
+`Blogs-API/config/config.js`
 
 ```
 module.exports = {
