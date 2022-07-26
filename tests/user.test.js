@@ -4,7 +4,7 @@ const chaiHttp = require('chai-http');
 
 const app = require('../api/app');
 
-const { userMock, loginMock, getAllUsers } = require('./mock/userMock');
+const { userMock, loginMock, userPost, getAllUsers } = require('./mock/userMock');
 const { Users } = require('../models');
 
 chai.use(chaiHttp);
@@ -13,12 +13,6 @@ const { expect } = chai;
 
 describe('Authentication test in POST "/user"', () => {
   let chaiHttpResponse;
-  const userPost = {
-    displayName: 'Rubinho Barrichello',
-    email: 'rubinho@gmail.com',
-    password: '123456',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Rubinho.jpg/220px-Rubinho.jpg'
-  };
   let errorLogin = {};
 
   before(async () => {
@@ -31,12 +25,18 @@ describe('Authentication test in POST "/user"', () => {
 
   describe('Should return the expected data', () => {
      it('should return the status code 201', async() => {
-      chaiHttpResponse = await chai.request(app).post('/user').send(userPost);
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/user')
+        .send(userPost);
       expect(chaiHttpResponse).to.have.status(201);
     });
 
     it('should return the key token', async () => {
-      chaiHttpResponse = await chai.request(app).post('/user').send(userPost);
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/user')
+        .send(userPost);
       expect(chaiHttpResponse.body).to.have.property('token');
     });
   });
@@ -62,7 +62,10 @@ describe('Authentication test in POST "/user"', () => {
         password: '123456',
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Rubinho.jpg/220px-Rubinho.jpg'
       };
-      chaiHttpResponse = await chai.request(app).post('/user').send(errorLogin);
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/user')
+        .send(errorLogin);
 
       expect(chaiHttpResponse).to.have.status(400);
       expect(chaiHttpResponse.body.message).to.be.equal('"email" is required');
@@ -76,7 +79,10 @@ describe('Authentication test in POST "/user"', () => {
         password: '123456',
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Rubinho.jpg/220px-Rubinho.jpg'
       };
-      chaiHttpResponse = await chai.request(app).post('/user').send(errorLogin);
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/user')
+        .send(errorLogin);
 
       expect(chaiHttpResponse).to.have.status(400);
       expect(chaiHttpResponse.body.message).to.be.equal('"email" must be a valid email');
@@ -90,7 +96,10 @@ describe('Authentication test in POST "/user"', () => {
         password: '123456',
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Rubinho.jpg/220px-Rubinho.jpg'
       };
-      chaiHttpResponse = await chai.request(app).post('/user').send(errorLogin);
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/user')
+        .send(errorLogin);
 
       expect(chaiHttpResponse).to.have.status(400);
       expect(chaiHttpResponse.body.message).to.be.equal('"email" must be a valid email');
@@ -102,7 +111,10 @@ describe('Authentication test in POST "/user"', () => {
         email: 'rubinho@gmail.com',
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Rubinho.jpg/220px-Rubinho.jpg'
       };
-      chaiHttpResponse = await chai.request(app).post('/user').send(errorLogin);
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/user')
+        .send(errorLogin);
 
       expect(chaiHttpResponse).to.have.status(400);
       expect(chaiHttpResponse.body.message).to.be.equal('"password" is required');
@@ -116,10 +128,16 @@ describe('Authentication test in POST "/user"', () => {
         password: '1234',
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Rubinho.jpg/220px-Rubinho.jpg'
       };
-      chaiHttpResponse = await chai.request(app).post('/user').send(errorLogin);
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/user')
+        .send(errorLogin);
 
       expect(chaiHttpResponse).to.have.status(400);
-      expect(chaiHttpResponse.body.message).to.be.equal('"password" length must be 6 characters long');
+      expect(chaiHttpResponse.body.message)
+        .to
+        .be
+        .equal('"password" length must be 6 characters long');
     });
 
     it('Validate that it is not possible to register a user with an existing email', async () => {
@@ -127,9 +145,12 @@ describe('Authentication test in POST "/user"', () => {
         displayName: 'Lewis Hamilton',
         email: 'lewishamilton@gmail.com',
         password: '123456',
-        image: 'https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg'
+        image: 'https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton.jpg'
       };
-      chaiHttpResponse = await chai.request(app).post('/user').send(errorLogin);
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/user')
+        .send(errorLogin);
 
       expect(chaiHttpResponse).to.have.status(409);
       expect(chaiHttpResponse.body.message).to.be.equal('User already registered');
@@ -155,75 +176,97 @@ describe('Authentication test in POST "/login"', () => {
 
   describe('Should return the expected data', () => {
     it('should return the status code 200', async() => {
-     chaiHttpResponse = await chai.request(app).post('/login').send(userLogin);
-     expect(chaiHttpResponse).to.have.status(200);
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(userLogin);
+      expect(chaiHttpResponse).to.have.status(200);
     });
 
-  it('should return the key token', async () => {
-    chaiHttpResponse = await chai.request(app).post('/login').send(userLogin);
-     expect(chaiHttpResponse.body).to.have.property('token');
+    it('should return the key token', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(userLogin);
+      expect(chaiHttpResponse.body).to.have.property('token');
     });
   });
 
-  it('It will be validated that the "email" field is mandatory', async () => {
-    errorLogin = {
-      password: '123456'
-    };
-    chaiHttpResponse = await chai.request(app).post('/login').send(errorLogin);
+  describe('Should not return the expected data', () => {
+    it('It will be validated that the "email" field is mandatory', async () => {
+      errorLogin = {
+        password: '123456'
+      };
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(errorLogin);
+  
+      expect(chaiHttpResponse).to.have.status(400);
+      expect(chaiHttpResponse.body.message).to.be.equal('"email" is required');
+    });
 
-    expect(chaiHttpResponse).to.have.status(400);
-    expect(chaiHttpResponse.body.message).to.be.equal('"email" is required');
-  });
+    it('It will be validated that the "password" field is mandatory', async () => {
+      errorLogin = {
+        email: 'lewishamilton@gmail.com'
+      };
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(errorLogin);
+  
+      expect(chaiHttpResponse).to.have.status(400);
+      expect(chaiHttpResponse.body.message).to.be.equal('"password" is required');
+    });
 
-  it('It will be validated that the "password" field is mandatory', async () => {
-    errorLogin = {
-      email: 'lewishamilton@gmail.com'
-    };
-    chaiHttpResponse = await chai.request(app).post('/login').send(errorLogin);
+    it('It will be that the "email" is not allowed to be empty', async () => {
+      errorLogin = {
+        email: '',
+        password: '123456',
+      };
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(errorLogin);
+  
+      expect(chaiHttpResponse).to.have.status(400);
+      expect(chaiHttpResponse.body.message).to.be.equal('"email" is not allowed to be empty');
+    });
 
-    expect(chaiHttpResponse).to.have.status(400);
-    expect(chaiHttpResponse.body.message).to.be.equal('"password" is required');
-  });
+    it('It will be that the "password" is not allowed to be empty', async () => {
+      errorLogin = {
+        email: 'lewishamilton@gmail.com',
+        password: '',
+      };
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(errorLogin);
+  
+      expect(chaiHttpResponse).to.have.status(400);
+      expect(chaiHttpResponse.body.message).to.be.equal('"password" is not allowed to be empty');
+    });
 
-  it('It will be that the "email" is not allowed to be empty', async () => {
-    errorLogin = {
-      email: '',
-      password: '123456',
-    };
-    chaiHttpResponse = await chai.request(app).post('/login').send(errorLogin);
-
-    expect(chaiHttpResponse).to.have.status(400);
-    expect(chaiHttpResponse.body.message).to.be.equal('"email" is not allowed to be empty');
-  });
-
-  it('It will be that the "password" is not allowed to be empty', async () => {
-    errorLogin = {
-      email: 'lewishamilton@gmail.com',
-      password: '',
-    };
-    chaiHttpResponse = await chai.request(app).post('/login').send(errorLogin);
-
-    expect(chaiHttpResponse).to.have.status(400);
-    expect(chaiHttpResponse.body.message).to.be.equal('"password" is not allowed to be empty');
-  });
-
-  it(`It will be validated that it is not possible to login with a
-  user that does not exist`, async () => {
-    errorLogin = {
-      email: 'aasd@gmail.com',
-      password: '123456',
-    };
-    chaiHttpResponse = await chai.request(app).post('/login').send(errorLogin);
-
-    expect(chaiHttpResponse).to.have.status(400);
-    expect(chaiHttpResponse.body.message).to.be.equal('Invalid fields');
+    it(`It will be validated that it is not possible to login with a
+    user that does not exist`, async () => {
+      errorLogin = {
+        email: 'aasd@gmail.com',
+        password: '123456',
+      };
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(errorLogin);
+  
+      expect(chaiHttpResponse).to.have.status(400);
+      expect(chaiHttpResponse.body.message).to.be.equal('Invalid fields');
+    });
   });
 });
 
 describe('Authentication test in GET "/user"', () => {
   let chaiHttpResponse;
   let token;
-  let errorLogin = {};
 
   before(async () => {
     sinon.stub(Users, 'create').resolves(loginMock);
@@ -236,25 +279,118 @@ describe('Authentication test in GET "/user"', () => {
   describe('Should return the expected data', () => {
     it('should return the status code 200', async () => {
       token = await chai.request(app).post('/login').send(loginMock);
-      chaiHttpResponse = await chai.request(app).get('/user').set('authorization', token.body.token);
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/user')
+        .set('authorization', token.body.token);
       expect(chaiHttpResponse).to.have.status(200);
     });
 
     it('should return a list of all users', async () => {
       token = await chai.request(app).post('/login').send(loginMock);
-      chaiHttpResponse = await chai.request(app).get('/user').set('authorization', token.body.token);
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/user')
+        .set('authorization', token.body.token);
       const firstUser = chaiHttpResponse.body[0];
-      expect(chaiHttpResponse.body[0]).to.include({
-        id: 1,
-        displayName: "Lewis Hamilton",
-        email: "lewishamilton@gmail.com",
-        image: "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
-      });
+      expect(chaiHttpResponse.body[0]).to.include(getAllUsers[0]);
       expect(firstUser.displayName).to.equal('Lewis Hamilton');
       expect(firstUser.email).to.equal('lewishamilton@gmail.com');
       expect(firstUser.image).to.equal(
         'https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg'
       );
+    });
+  });
+
+  describe('Should not return the expected data', () => {
+    it('if the token is non-existent', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/user');
+      expect(chaiHttpResponse).to.have.status(401);
+      expect(chaiHttpResponse.body.message).to.be.equal('Token not found');
+    });
+
+    it('if the token is invalid', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/user')
+        .set('authorization', 'abcd21878181chaa');
+      expect(chaiHttpResponse).to.have.status(401);
+      expect(chaiHttpResponse.body.message).to.be.equal('Expired or invalid token');
+    });
+  });
+});
+
+describe('Authentication test in GET "/user/:id"', () => {
+  let chaiHttpResponse;
+  let token;
+
+  before(async () => {
+    sinon.stub(Users, 'create').resolves(loginMock);
+  });
+
+  after(() => {
+    Users.create.restore();
+  });
+
+  describe('Should return the expected data', () => {
+    it('should return the status code 200', async () => {
+      token = await chai.request(app).post('/login').send(loginMock);
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/user/1')
+        .set('authorization', token.body.token);
+      expect(chaiHttpResponse).to.have.status(200);
+    });
+
+    it('should return a list of all users', async () => {
+      token = await chai.request(app).post('/login').send(loginMock);
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/user/1')
+        .set('authorization', token.body.token);
+      const user = chaiHttpResponse.body;
+      expect(chaiHttpResponse.body).to.include({
+        id: 1,
+        displayName: "Lewis Hamilton",
+        email: "lewishamilton@gmail.com",
+        image: "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+      });
+      expect(user.displayName).to.equal('Lewis Hamilton');
+      expect(user.email).to.equal('lewishamilton@gmail.com');
+      expect(user.image).to.equal(
+        'https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg'
+      );
+    });
+  });
+
+  describe('Should not return the expected data', () => {
+    it('if the user is non-existent', async () => {
+      token = await chai.request(app).post('/login').send(loginMock);
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/user/10000')
+        .set('authorization', token.body.token);
+      expect(chaiHttpResponse).to.have.status(404);
+      expect(chaiHttpResponse.body.message).to.be.equal('User does not exist');
+    });
+
+    it('if the token is non-existent', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/user/1');
+      expect(chaiHttpResponse).to.have.status(401);
+      expect(chaiHttpResponse.body.message).to.be.equal('Token not found');
+    });
+
+    it('if the token is invalid', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/user/1')
+        .set('authorization', 'abcd21878181chaa');
+      expect(chaiHttpResponse).to.have.status(401);
+      expect(chaiHttpResponse.body.message).to.be.equal('Expired or invalid token');
     });
   });
 });
