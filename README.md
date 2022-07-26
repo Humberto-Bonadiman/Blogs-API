@@ -23,16 +23,57 @@ Após cada um dos passos, haverá um exemplo do comando a ser digitado para faze
 2. Entre no diretório que acabou de criar e depois clone o projeto:
 ```javascript
   cd projetos-humberto
-  git git@github.com:Humberto-Bonadiman/Blogs-API.git
+  git clone git@github.com:Humberto-Bonadiman/Blogs-API.git
 ```
 
-3. Acesse o diretório do projeto e depois utilize o comando **npm i** (opcional) para instalar todas as dependências necessárias:
+3. Acesse o diretório do projeto e depois utilize o comando **npm install** (opcional) para instalar todas as dependências necessárias:
 ```javascript
   cd Blogs-API
-  npm i
+  npm install
 ```
 
-4. Abra o diretório do projeto clonado, depois você pode entrar nos diretórios api, controllers, middlewares, migrations e models e dar duplo clique no arquivos para visualizar os códigos do projeto.
+---
+
+## Estrutura base do projeto
+
+```
+├── README.md
+├── api
+│  ├── app.js
+│  └── routes.js
+├── config
+│  ├── config.js
+│  └── config.json
+├── controllers
+│  ├── categoriesController.js
+│  ├── loginController.js  
+│  ├── postController.js
+│  └── userController.js
+├── migrations
+│  ├── create-users.js
+│  ├── create-categories.js
+│  ├── create-blog-posts.js
+│  └── create-posts-categories.js 
+├── models
+│  ├── blogposts.js
+│  ├── categories.js
+│  ├── index.js
+│  ├── postscategories.js
+│  └── users.js
+├── seeders
+│  ├── Users.js
+│  ├── Categories.js
+│  ├── BlogPosts.js
+│  └── PostsCategories.js
+├── .eslintignore
+├── .eslintrc.json
+├── .gitignore
+├── Dockerfile
+├── index.js
+├── package-lock.json
+├── package.json
+└── yarn.lock
+```
 
 ---
 
