@@ -351,7 +351,7 @@ describe('Authentication test in GET "/user/:id"', () => {
         .get('/user/1')
         .set('authorization', token.body.token);
       const user = chaiHttpResponse.body;
-      expect(chaiHttpResponse.body).to.include({
+      expect(user).to.include({
         id: 1,
         displayName: "Lewis Hamilton",
         email: "lewishamilton@gmail.com",
