@@ -47,4 +47,9 @@ const getPost = [
   }
 ];
 
-module.exports = { registrationPost, getPost };
+const putPost = {
+  title: "Trybe Love I",
+  content: "<3 Love"
+};
+
+module.exports = { registrationPost, getPost, putPost };
