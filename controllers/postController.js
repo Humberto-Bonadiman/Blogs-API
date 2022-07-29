@@ -1,33 +1,20 @@
 require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const { Op } = require('sequelize');
 
-const { BlogPosts, Users, Categories, PostsCategories } = require('../models');
-
-function postObject(object) {
-  return {
-    id: object.id,
-    userId: object.userId,
-    title: object.title,
-    content: object.content,
-  };
-}
+const postService = require('../service/postService');
 
 const createPost = async (req, res) => {
   try {
     const { title, content, categoryIds } = req.body;
     const token = req.headers.authorization;
   
-    const { data: { id } } = jwt.verify(token, process.env.JWT_SECRET);
-    const post = await BlogPosts.create({ title, content, userId: id });
-    
-    const categoryPostsIds = categoryIds.map(async (categoryId) => {
-      PostsCategories.create({ categoryId, postId: post.id });
+    const post = await postService.createPost({ title, content, categoryIds }, token);
+
+    return res.status(201).json({
+      id: post.id,
+      userId: post.userId,
+      title: post.title,
+      content: post.content,
     });
-
-    await Promise.all(categoryPostsIds);
-
-    return res.status(201).json(postObject(post));
   } catch (err) {
     return res.status(500).json({ message: 'Erro interno', error: err.message });
   }
@@ -35,12 +22,7 @@ const createPost = async (req, res) => {
 
 const getAllPosts = async (_req, res) => {
   try {
-    const allPosts = await BlogPosts.findAll({
-      include: [
-        { model: Users, as: 'user', attributes: { exclude: 'password' } },
-        { model: Categories, as: 'categories', through: { attributes: [] } },
-      ],
-    });
+    const allPosts = await postService.getAllPosts();
 
     return res.status(200).json(allPosts);
   } catch (err) {
@@ -51,13 +33,7 @@ const getAllPosts = async (_req, res) => {
 const getPostById = async (req, res) => {
   try {
     const { id } = req.params;
-    const getById = await BlogPosts.findOne({
-      where: { id },
-      include: [
-        { model: Users, as: 'user', attributes: { exclude: 'password' } },
-        { model: Categories, as: 'categories', through: { attributes: [] } },
-      ],
-    });
+    const getById = await postService.getPostById(id);
 
     return res.status(200).json(getById);
   } catch (err) {
@@ -68,25 +44,15 @@ const getPostById = async (req, res) => {
 const updatePostById = async (req, res) => {
   const { id } = req.params;
   const { title, content } = req.body;
-  await BlogPosts.update(
-    { title, content },
-    { where: { id } },
-  );
 
-  const getById = await BlogPosts.findOne({
-    where: { id },
-    include: [
-      { model: Categories, as: 'categories', through: { attributes: [] } },
-    ],
-    attributes: { exclude: ['id', 'published', 'updated'] },
-  });
+  const getById = await postService.getPostById(id, { title, content });
 
   return res.status(200).json(getById);
 };
 
 const deletePostById = async (req, res) => {
   const { id } = req.params;
-  await BlogPosts.destroy({ where: { id } });
+  await postService.deletePostById(id);
 
   return res.status(204).end();
 };
@@ -97,18 +63,7 @@ const deletePostById = async (req, res) => {
 const getPostBySearch = async (req, res) => {
   const { q } = req.query;
 
-  const getPostByQuery = await BlogPosts.findAll({
-    where: {
-      [Op.or]: [
-        { title: { [Op.like]: `%${q}%` } },
-        { content: { [Op.like]: `%${q}%` } },
-      ],
-    },
-    include: [
-      { model: Users, as: 'user', attributes: { exclude: 'password' } },
-      { model: Categories, as: 'categories', through: { attributes: [] } },
-    ],
-  });
+  const getPostByQuery = await postService.getPostBySearch(q);
 
   return res.status(200).json(getPostByQuery);
 };
