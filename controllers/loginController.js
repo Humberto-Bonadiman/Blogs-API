@@ -1,20 +1,12 @@
 require('dotenv').config();
 
-const jwt = require('jsonwebtoken');
-const { Users } = require('../models');
+const loginService = require('../service/loginService');
 
 module.exports = async (req, res) => {
   try {
     const { email } = req.body;
-    
-    const user = await Users.findOne({ where: { email } });
 
-    const jwtConfig = {
-      expiresIn: '7d',
-      algorithm: 'HS256',
-    };
-
-    const token = jwt.sign({ data: user }, process.env.JWT_SECRET, jwtConfig);
+    const token = await loginService.create(email);
 
     return res.status(200).json({ token });
   } catch (err) {
