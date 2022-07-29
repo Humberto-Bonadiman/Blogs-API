@@ -22,6 +22,11 @@ const loginMock = {
   password: '123456',
 };
 
+const deleteMock = {
+  email: 'fernando_alonso@gmail.com',
+  password: '123456',
+};
+
 const getAllUsers = [
   {
     id: 1,
@@ -37,4 +42,11 @@ const getAllUsers = [
   },
 ]
 
-module.exports = { userMock, tokenUser, loginMock, getAllUsers, userPost };
+module.exports = {
+  userMock,
+  tokenUser,
+  loginMock,
+  getAllUsers,
+  userPost,
+  deleteMock
+};

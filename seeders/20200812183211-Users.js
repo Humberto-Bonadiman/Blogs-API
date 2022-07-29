@@ -15,6 +15,13 @@ module.exports = {
         password: '123456',
         image: 'https://sportbuzz.uol.com.br/media/_versions/gettyimages-52491565_widelg.jpg',
       },
+      {
+        id: 3,
+        displayName: 'Fernando Alonso',
+        email: 'fernando_alonso@gmail.com',
+        password: '123456',
+        image: 'https://pt.wikipedia.org/wiki/Fernando_Alonso#/media/Ficheiro:Alonso_2016.jpg',
+      }
       ], { timestamps: false });
   },
 
