@@ -10,14 +10,7 @@ const { loginMock, deleteMock } = require('./mock/userMock');
 
 chai.use(chaiHttp);
 
-const {
-  registrationPost,
-  getPost,
-  putPost,
-  returnPost,
-  updateReturn,
-  searchPost,
-} = require('./mock/blogPostMock');
+const { searchPost } = require('./mock/blogPostMock');
 
 const { expect } = chai;
 
