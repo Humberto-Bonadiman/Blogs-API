@@ -6,13 +6,16 @@
     "dotenv": "^8.2.0",
     "eslint-config-trybe-backend": "1.0.3",
     "express": "4.17.1",
+    "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.1.0",
     "sequelize": "^6.3.4",
-    "shelljs": "0.8.5"
+    "shelljs": "0.8.5",
+    "superagent": "^8.0.0",
+    "uuid": "^9.0.0"
   },
   "scripts": {
-    "prestart": "npx sequelize-cli db:create && npx sequelize-cli db:migrate $",
+    "prestart": "npx sequelize-cli db:create && npx sequelize-cli db:migrate",
     "start": "node index.js",
     "drop": "npx sequelize-cli db:drop $",
     "seed": "npx sequelize-cli db:seed:all $",

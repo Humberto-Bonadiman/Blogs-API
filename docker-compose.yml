@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+  application:
+    build: .
+    container_name: application
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $PORT:$PORT
+    environment:
+      - DB_HOST=mysqldb
+      - DB_USER=$MYSQL_USER
+      - DB_PASSWORD=$MYSQL_PASSWORD
+      - DB_NAME=blogs_api
+      - DB_PORT=$DB_DOCKER_PORT
+    networks:
+      - blogs-api-net
+    depends_on:
+      - mysqldb
+    stdin_open: true
+    tty: true
+  mysqldb:
+    image: mysql:8
+    container_name: mysqldb
+    restart: unless-stopped
+    env_file: ./.env
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - blogs-api-net
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_DATABASE=blogs_api
+    ports:
+      - $DB_LOCAL_PORT:$DB_DOCKER_PORT
+networks:
+  blogs-api-net:
+     driver: bridge
+volumes:
+  db:
