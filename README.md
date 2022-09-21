@@ -34,6 +34,44 @@ Após cada um dos passos, haverá um exemplo do comando a ser digitado para faze
 
 ---
 
+## Alterar variáveis de ambiente
+
+Crie um arquivo **.env** e adicione os dados que estão dentro do arquivo **.env.example**. Após realize as alterações conforme os dados necessários para rodar o MySQL localmente.
+
+```javascript
+MYSQL_USER=your_user_of_mysql
+MYSQL_PASSWORD=your_password_of_mysql
+HOSTNAME=localhost # use this host without docker
+# HOSTNAME=mysqldb # use this host for docker
+JWT_SECRET=your_jwt_secret_here
+PORT=3000
+DB_LOCAL_PORT=3306
+DB_DOCKER_PORT=3306
+```
+## Rodar o projeto localmente
+
+Para rodar o projeto localmente basta executar o comando **npm start**.
+```javascript
+npm start
+```
+
+## Rodar o projeto com o Docker
+
+Para rodar o projeto com o Docker é necessário comentar a linha do arquivo **.env** onde **HOSTNAME=localhost** e descomentar a linha onde possuí **#HOSTNAME=mysqldb**.
+<br/>
+Após é necessário rodar os seguintes comandos:
+```
+docker-compose build
+npm run docker-run
+```
+
+E para finalizar a aplicação com o docker basta rodar:
+```
+docker-compose down
+```
+
+---
+
 ## Estrutura base do projeto
 
 ```
