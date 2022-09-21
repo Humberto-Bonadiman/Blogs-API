@@ -18,6 +18,8 @@
     "prestart": "npx sequelize-cli db:create && npx sequelize-cli db:migrate",
     "start": "node index.js",
     "drop": "npx sequelize-cli db:drop $",
+    "docker-run": "sudo service mysql stop && docker-compose up -d",
+    "docker-down": "docker-compose down",
     "seed": "npx sequelize-cli db:seed:all $",
     "test-coverage": "jest --runInBand --coverage",
     "debug": "nodemon index.js",
