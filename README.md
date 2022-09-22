@@ -55,66 +55,6 @@ Para rodar o projeto localmente basta executar o comando **npm start**.
 npm start
 ```
 
-## Rodar o projeto com o Docker
-
-Para rodar o projeto com o Docker é necessário comentar a linha do arquivo **.env** onde **HOSTNAME=localhost** e descomentar a linha onde possuí **#HOSTNAME=mysqldb**.
-<br/>
-Após é necessário rodar os seguintes comandos:
-```
-docker-compose build
-npm run docker-run
-```
-
-E para finalizar a aplicação com o docker basta rodar:
-```
-docker-compose down
-```
-
----
-
-## Estrutura base do projeto
-
-```
-├── README.md
-├── api
-│  ├── app.js
-│  └── routes.js
-├── config
-│  ├── config.js
-│  └── config.json
-├── controllers
-│  ├── categoriesController.js
-│  ├── loginController.js  
-│  ├── postController.js
-│  └── userController.js
-├── migrations
-│  ├── create-users.js
-│  ├── create-categories.js
-│  ├── create-blog-posts.js
-│  └── create-posts-categories.js 
-├── models
-│  ├── blogposts.js
-│  ├── categories.js
-│  ├── index.js
-│  ├── postscategories.js
-│  └── users.js
-├── seeders
-│  ├── Users.js
-│  ├── Categories.js
-│  ├── BlogPosts.js
-│  └── PostsCategories.js
-├── .eslintignore
-├── .eslintrc.json
-├── .gitignore
-├── Dockerfile
-├── index.js
-├── package-lock.json
-├── package.json
-└── yarn.lock
-```
-
----
-
 # Requisitos do projeto:
 
 **Faça essas configurações também para as variáveis de ambiente usadas nesses arquivo:**
